@@ -180,7 +180,7 @@ This Skill polishes English academic text for journal submission through two mod
 - Apply journal style preferences from loaded template.
 - Avoid anti-AI vocabulary; flag and rewrite AI-sounding phrases.
 - Pay special attention to translationese if detected (literal structures, calques, excessive "of" constructions).
-- For file input: use Edit tool; add `% [Polish] Original: <original text>` annotation before each modification.
+- For file input: use Edit tool.
 - For pasted text: present polished output directly in conversation with key changes highlighted.
 
 **Step 3 -- Smart Adaptation:**
@@ -218,20 +218,12 @@ This Skill polishes English academic text for journal submission through two mod
 
 **Step 6 -- Bilingual Display:** Same as Quick-fix Step 5. If `bilingual_mode` is true, display `> **[Chinese]** ...` blockquotes in conversation for each modified paragraph. If false, skip entirely.
 
-## LaTeX Annotation Format
-
-- Format: `% [Polish] Original: <original text>` on the line immediately before the replacement text.
-- Multi-line originals: each line gets its own `% [Polish] Original:` prefix.
-- Annotations are valid LaTeX comments -- the file still compiles with them present.
-- Cleanup: after user confirms acceptance, remove all lines matching `^% \[Polish\] Original:` pattern.
-- If existing `% [Polish] Original:` annotations are found, clean them up before adding new ones.
 
 ## Output Contract
 
 | Output | Format | Condition |
 |--------|--------|-----------|
 | `polished_text` | In-place edits (file) or conversation output (pasted text) | Always produced |
-| `change_annotations` | LaTeX comments (`% [Polish] Original:`) | File input only |
 | `summary_report` | Markdown in session (not in file) | Always produced |
 | `bilingual_conversation` | `> **[Chinese]** ...` blockquotes in session | File input: modified paragraphs only. Pasted text: after each output paragraph. Skipped when opt-out detected. |
 
@@ -245,7 +237,6 @@ This Skill polishes English academic text for journal submission through two mod
 | File input | Use Edit tool only; never Write (do not overwrite entire file) |
 | Journal specified but no template | Refuse; instruct user to add template at `references/journals/[journal].md` |
 | Very long input (10+ sections) | Process in batches; maintain cross-section terminology awareness |
-| Existing `% [Polish] Original:` annotations | Clean up old annotations before adding new ones |
 | Mixed LaTeX and text | Preserve all LaTeX commands; polish surrounding natural language only |
 | Text with obvious translationese | Flag in summary; prioritize translationese fixes in expression pass |
 
